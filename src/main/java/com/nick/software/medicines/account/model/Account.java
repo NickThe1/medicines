@@ -26,4 +26,7 @@ public class Account extends BaseAuditEntity{
     @ElementCollection(targetClass = AccountType.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<AccountType> accountTypes;
+
+    @OneToOne
+    private AccountDetails accountDetails;
 }
