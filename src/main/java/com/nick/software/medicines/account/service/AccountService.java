@@ -2,6 +2,7 @@ package com.nick.software.medicines.account.service;
 
 import com.nick.software.medicines.account.dto.RegistrationDTO;
 import com.nick.software.medicines.account.dto.RegistrationResponse;
+import com.nick.software.medicines.account.dto.Response;
 import com.nick.software.medicines.account.model.Account;
 import com.nick.software.medicines.account.model.AccountType;
 import com.nick.software.medicines.account.repository.AccountRepository;
@@ -45,5 +46,11 @@ public class AccountService {
         registrationResponse.setStatus(true);
         registrationResponse.setMessage("Registration complete");
         return registrationResponse;
+    }
+
+    public Response deleteAccount(String username){
+        Response response = new Response();
+
+        return response;
     }
 }
