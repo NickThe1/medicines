@@ -1,5 +1,6 @@
 package com.nick.software.medicines.account.service;
 
+import com.nick.software.medicines.account.dto.LoginDTO;
 import com.nick.software.medicines.account.dto.RegistrationDTO;
 import com.nick.software.medicines.account.dto.RegistrationResponse;
 import com.nick.software.medicines.account.dto.Response;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,9 +50,26 @@ public class AccountService {
         return registrationResponse;
     }
 
+    public Response login(LoginDTO loginDTO){
+        Response response = new Response();
+        Account account = accountRepository.findByUsernameAndPassword(loginDTO.getUsername(), loginDTO.getPassword());
+
+        if (account == null){
+            response.setMessages(Collections.singletonList("Incorrect username or password"));
+            return response;
+        }else {
+            response.setMessages(Collections.singletonList(account.getUsername()));
+        }
+        return response;
+    }
+
     public Response deleteAccount(String username){
         Response response = new Response();
-
+        Account account = accountRepository.findByUsername(username);
+        account.setAccountTypes(Collections.singleton(AccountType.DELETED));
+        accountRepository.save(account);
+        log.info("====================== account deleted ========================");
+        response.setMessages(Collections.singletonList(account.getUsername()));
         return response;
     }
 }
